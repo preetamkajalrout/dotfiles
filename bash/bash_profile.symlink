@@ -1,0 +1,26 @@
+# Add '~/apps' and '~/bin' Added by codeartist for apps executables
+export PATH=$HOME/bin:$HOME/apps:$PATH
+
+DOTFILES_ROOT=$(pwd -P)
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# Add all aliases for all the directory in the dotfile repo
+
+
+# Add git aliases
+# if [ -f ~/dotfiles/git/.aliases ]; then
+#     . ~/dotfiles/git/.aliases
+# fi
+
+# Add prompt with added .bash_prompt
+if [ -f ~/.bash_prompt ]; then
+	source ~/.bash_prompt;
+fi

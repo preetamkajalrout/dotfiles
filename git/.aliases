@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# git log for different scenario
+alias gl='git log'
+alias glo='git log --oneline'
+alias glg='git log --oneline --graph --all'

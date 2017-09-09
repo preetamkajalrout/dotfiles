@@ -1,0 +1,9 @@
+[user]
+	name = Preetam Kajal Rout
+	email = preetamkajalrout@gmail.com
+[core]
+	editor = vim
+[color]
+	ui = auto
+[log]
+	decorate = auto
