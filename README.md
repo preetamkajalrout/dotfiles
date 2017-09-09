@@ -2,5 +2,7 @@
 Repo to start with initial configuration. This is not a well-developed dotfiles
 repo. so refrain from using it.
 
-## what it stores
-very basic configuration for prompt and some configuration
+## Installation
+git clone <repo>
+cd <dotfiles> directory
+./start.sh
