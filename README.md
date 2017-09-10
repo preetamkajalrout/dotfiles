@@ -28,5 +28,10 @@ $ source ~/.bashrc
 - [ ] Add installation script for development environment setup
 - [ ] Add configuration for vim, kde-plasma (if possible)
 
+## Thanks to...
+[Zach Holman](https://github.com/holman/) and
+[Mathias Bynens](https://github.com/mathiasbynens) .
+I copied shamelessly a lot of scripts and ideas from their dotfiles :grin:
+
 ## License
 This project is licensed under [MIT License](./LICENSE)
