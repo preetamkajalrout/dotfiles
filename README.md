@@ -26,7 +26,8 @@ $ source ~/.bashrc
 ## TODO
 - [x] Initial setup for bash prompt and bash profile
 - [ ] Add installation script for development environment setup
-- [ ] Add configuration for vim, kde-plasma (if possible)
+- [x] Add configuration for vim
+- [ ] Add overwrite option for changes done to initial files symlinks
 
 ## Thanks to...
 [Zach Holman](https://github.com/holman/) and
