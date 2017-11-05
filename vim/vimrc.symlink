@@ -1,0 +1,72 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" 1. Vundle Package Manager
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Plugin 'klen/python-mode'
+" Plugin 'sickill/vim-monokai'
+" Plugin 'rakr/vim-one'
+Plugin 'NLKNguyen/papercolor-theme'
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+" 1.a. Color schemes
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+
+" 2. Color
+
+" Editor theme
+syntax enable
+" colorscheme monokai
+" colorscheme one
+colorscheme PaperColor
+set background=light
+
+
+" 3. Indent and Structure
+set number
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
+set laststatus=2 " Always display the statusline in all windows
+set showtabline=2 " Always display the tabline, even if there is only one tab
+
+" 4. Search
+set incsearch
+set hlsearch
+
+"5. Nerd Tree configuration
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-e> :NERDTreeToggle<CR>
+
+"6. Tab configuration
+map <C-t><up> :tabr<cr>
+map <C-t><down> :tabl<cr>
+map <C-t><left> :tabp<cr>
+map <C-t><right> :tabn<cr>
+
+"7. Split configuration
+set splitbelow
+set splitright
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"8. Extra configuration
+let mapleader = ","
+map <Leader>s :w<cr>  " Save file with Ctrl-s
+map <Leader>q :q<cr> " Quit current tab, buffer, split
+map <Leader>x :qa<cr> " Quit all buffers, tabs, splits and exit
