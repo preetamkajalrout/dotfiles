@@ -16,6 +16,11 @@ Plugin 'NLKNguyen/papercolor-theme'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'pangloss/vim-javascript' 
+Plugin 'mxw/vim-jsx'
+Plugin 'Townk/vim-autoclose'
+Plugin 'vim-scripts/closetag.vim'
+Plugin 'Valloric/YouCompleteMe'
 
 " 1.a. Color schemes
 
@@ -70,3 +75,8 @@ let mapleader = ","
 map <Leader>s :w<cr>  " Save file with Ctrl-s
 map <Leader>q :q<cr> " Quit current tab, buffer, split
 map <Leader>x :qa<cr> " Quit all buffers, tabs, splits and exit
+
+"9. Development configurations
+"
+"9.1. JSX configuration
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
