@@ -24,3 +24,8 @@ fi
 if [ -f ~/.bash_prompt ]; then
 	source ~/.bash_prompt;
 fi
+
+# Add powerline support for bash with Python 2.7
+# if [ -f /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh ]; then
+# 	source /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
+# fi
