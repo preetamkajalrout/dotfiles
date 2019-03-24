@@ -10,9 +10,9 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " Plugin 'klen/python-mode'
-" Plugin 'sickill/vim-monokai'
+Plugin 'sickill/vim-monokai'
 " Plugin 'rakr/vim-one'
-Plugin 'NLKNguyen/papercolor-theme'
+" Plugin 'NLKNguyen/papercolor-theme'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -33,17 +33,21 @@ filetype plugin indent on    " required
 
 " Editor theme
 syntax enable
-" colorscheme monokai
+colorscheme monokai
 " colorscheme one
-colorscheme PaperColor
-set background=light
+" colorscheme PaperColor
+" set background=light
 
 
 " 3. Indent and Structure
 set number
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
+" Setup Powerline (for Python 2.7)
+set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
+
+" Setup Powerline (for Python 3+)
+" python3 from powerline.vim import setup as powerline_setup
+" python3 powerline_setup()
+" python3 del powerline_setup
 set laststatus=2 " Always display the statusline in all windows
 set showtabline=2 " Always display the tabline, even if there is only one tab
 
