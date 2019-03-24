@@ -40,7 +40,12 @@ colorscheme monokai
 
 
 " 3. Indent and Structure
-set number
+set number " Shows the line number
+" set tabstop=2 " Sets the width of TAB even though it is \t for vim
+set shiftwidth=2 " Indents will have width of 4 
+set softtabstop=2 " Sets number of column for a TAB
+" set expandtab " Expand TABs to Spaces
+
 " Setup Powerline (for Python 2.7)
 set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 
