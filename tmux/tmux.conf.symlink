@@ -88,6 +88,9 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-yank'
 
+# tmux-continuum configuration for auto-restore sessions
+set -g @continuum-restore 'on'
+
 # Initialize TPM (keep this line at the very bottom of your tmux.conf).
 run -b '~/.tmux/plugins/tpm/tpm'
 
