@@ -1,5 +1,6 @@
 # Add '~/apps' and '~/bin' Added by codeartist for apps executables
 export PATH=$HOME/bin:$HOME/apps:$PATH
+# export TERM=screen-256color # Changes the console TERM to screen-256 and now vim should display the background properly
 
 DOTFILES_ROOT=$(pwd -P)
 
@@ -8,9 +9,9 @@ DOTFILES_ROOT=$(pwd -P)
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+  if [ -f ~/.bash_aliases ]; then
+  . ~/.bash_aliases
+  fi
 
 # Add all aliases for all the directory in the dotfile repo
 
@@ -21,11 +22,16 @@ fi
 # fi
 
 # Add prompt with added .bash_prompt
-if [ -f ~/.bash_prompt ]; then
-	source ~/.bash_prompt;
-fi
+  if [ -f ~/.bash_prompt ]; then
+  source ~/.bash_prompt;
+  fi
 
 # Add powerline support for bash with Python 2.7
-# if [ -f /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh ]; then
-# 	source /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
-# fi
+  if [ -f /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh ]; then
+  source /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
+  fi
+
+# Set TERM to screen-256color if inside tmux
+  if [ -n "$TMUX" ] && [ "$HOSTNAME" != "Preetam-XPS" ]; then
+  export TERM=screen-256color
+  fi
