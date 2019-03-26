@@ -9,9 +9,9 @@ DOTFILES_ROOT=$(pwd -P)
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-  if [ -f ~/.bash_aliases ]; then
+if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
-  fi
+fi
 
 # Add all aliases for all the directory in the dotfile repo
 
@@ -22,16 +22,16 @@ DOTFILES_ROOT=$(pwd -P)
 # fi
 
 # Add prompt with added .bash_prompt
-  if [ -f ~/.bash_prompt ]; then
+if [ -f ~/.bash_prompt ]; then
   source ~/.bash_prompt;
-  fi
+fi
 
 # Add powerline support for bash with Python 2.7
-  if [ -f /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh ]; then
+if [ -f /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh ]; then
   source /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
-  fi
+fi
 
 # Set TERM to screen-256color if inside tmux
-  if [ -n "$TMUX" ] && [ "$HOSTNAME" != "Preetam-XPS" ]; then
+if [ -n "$TMUX" ] && [ "$HOSTNAME" != "Preetam-XPS" ]; then
   export TERM=screen-256color
-  fi
+fi
