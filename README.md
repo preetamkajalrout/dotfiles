@@ -8,6 +8,9 @@ A naive attempt to create dotfiles for \*Nix based system for personal use.
 * git
 * vundle package manager [https://github.com/VundleVim/Vundle.vim]
 * js-beautify
+* zsh [ ```sudo apt install zsh``` ]
+* oh-my-zsh [ ```sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"``` ]
+* [nvm](https://github.com/nvm-sh/nvm)
 
 ## Installation
 ```
@@ -15,20 +18,6 @@ $ git clone git@github.com:preetamkajalrout/dotfiles.git
 $ cd dotfiles
 $ chmod +x start.sh
 $ ./start.sh
-```
-
-## Usage
-Add following to `~/.bashrc` file:
-```
-# Add custom bash_profile
-if [ -f ~/.bash_profile ]; then
-    . ~/.bash_profile
-fi
-```
-
-Execute following on the `terminal`
-```
-$ source ~/.bashrc
 ```
 
 ## TODO
