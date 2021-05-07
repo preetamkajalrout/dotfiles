@@ -11,8 +11,6 @@
 # set -g prefix `
 # setind ` send-prefix
 
-# Gets the powerline setup for tmux
-source /usr/local/lib/python2.7/dist-packages/powerline/bindings/tmux/powerline.conf
 
 # Allow opening multiple terminals to view the same session at different sizes.
 setw -g aggressive-resize on
@@ -27,7 +25,7 @@ set -g history-limit 50000
 set -g default-terminal "screen-256color"
 
 # Ensure window titles get renamed automatically.
-setw -g automatic-rename
+# setw -g automatic-rename
 
 # Start windows and panes index at 1, not 0.
 set -g base-index 1
@@ -36,13 +34,25 @@ setw -g pane-base-index 1
 # Enable full mouse support.
 set -g mouse on
 
-# Status bar optimized for Gruvbox.
-set -g status-fg colour244
-set -g status-bg default
-set -g status-left ''
-set -g status-right-length 0
-#set -g status-right-length 20
-#set -g status-right '%a %Y-%m-%d %H:%M'
+# Ensure window name doesn't change once used
+set-option -g allow-rename off
+
+# Status bar position
+# set-option -g status-position bottom
+
+# Status bar colors
+#set -g status-attr dim
+#set -g status-fg yellow  #colour237 
+#set -g status-bg '#22a7f2' #cyan 
+set status-style fg=white,bg='#22a7f2'
+
+# Status bar left customization (if any)
+set -g status-left ' '
+set -g status-left-length 20
+
+# Status bar right customization
+set -g status-right-length 60
+set -g status-right 'OL:#{online_status}| #{battery_icon_status} #{battery_percentage}% | %a %Y-%m-%d %H:%M'
 
 set -g pane-border-fg default
 set -g pane-border-bg default
@@ -50,7 +60,7 @@ set -g pane-active-border-fg colour250
 set -g pane-active-border-bg default
 
 set-window-option -g window-status-current-attr bold
-set-window-option -g window-status-current-fg colour223
+set-window-option -g window-status-current-fg colour233
 
 # -----------------------------------------------------------------------------
 # Key bindings
@@ -62,17 +72,15 @@ unbind '"'
 unbind %
 
 # Reload the tmux config.
-bind-key r source-file ~/.tmux.conf
+# bind-key r source-file ~/.tmux.conf
 
 # Split panes.
 bind-key h split-window -v
 bind-key v split-window -h
 
-# Move around panes with ALT + arrow keys.
-bind-key -n M-Up select-pane -U
-bind-key -n M-Left select-pane -L
-bind-key -n M-Down select-pane -D
-bind-key -n M-Right select-pane -R
+# Configure variables for plugins
+set -g @online_icon "✅ "
+set -g @offline_icon "⛔️ "
 
 # -----------------------------------------------------------------------------
 # Plugin Manager - https://github.com/tmux-plugins/tpm
@@ -87,6 +95,8 @@ set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-online-status'
+set -g @plugin 'tmux-plugins/tmux-battery'
 
 # tmux-continuum configuration for auto-restore sessions
 set -g @continuum-restore 'on'
