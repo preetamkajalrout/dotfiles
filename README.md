@@ -17,6 +17,7 @@ $ ./start.sh
 - Zsh (Setups & makes it default shell)
 - Tmux
 - vim
+- Python 3
 - dotfiles linking
 - Oh-My-Zsh
   - zsh-autosuggestions
