@@ -21,7 +21,7 @@ Plugin 'mxw/vim-jsx'
 Plugin 'Townk/vim-autoclose'
 Plugin 'vim-scripts/closetag.vim'
 Plugin 'Chiel92/vim-autoformat'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 
 " 1.a. Color schemes
 
