@@ -44,7 +44,7 @@ set-option -g allow-rename off
 #set -g status-attr dim
 #set -g status-fg yellow  #colour237 
 #set -g status-bg '#22a7f2' #cyan 
-set status-style fg=white,bg='#22a7f2'
+set -g status-style fg=white,bg='#22a7f2'
 
 # Status bar left customization (if any)
 set -g status-left ' '
@@ -54,13 +54,10 @@ set -g status-left-length 20
 set -g status-right-length 60
 set -g status-right 'OL:#{online_status}| #{battery_icon_status} #{battery_percentage}% | %a %Y-%m-%d %H:%M'
 
-set -g pane-border-fg default
-set -g pane-border-bg default
-set -g pane-active-border-fg colour250
-set -g pane-active-border-bg default
+set -g pane-border-style fg=default,bg=default
+set -g pane-active-border-style fg=colour250,bg=default
 
-set-window-option -g window-status-current-attr bold
-set-window-option -g window-status-current-fg colour233
+setw -g window-status-current-style fg=colour233,bold
 
 # -----------------------------------------------------------------------------
 # Key bindings
@@ -102,6 +99,8 @@ set -g @plugin 'tmux-plugins/tmux-battery'
 set -g @continuum-restore 'on'
 
 # Initialize TPM (keep this line at the very bottom of your tmux.conf).
+if "test ! -d ~/.tmux/plugins/tpm" \
+   "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
 run -b '~/.tmux/plugins/tpm/tpm'
 
 
