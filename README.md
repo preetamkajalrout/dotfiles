@@ -1,16 +1,8 @@
 # dotfiles
-A naive attempt to create dotfiles for \*Nix based system for personal use.
+A personal set of dotfile configuration & script to automate the environment setup
 
-## MUST Install Following for dev environment to work seemlessly
-* python2.7
-* nodejs
-* grip (for markdown preview)
-* git
-* vundle package manager [https://github.com/VundleVim/Vundle.vim]
-* js-beautify
-* zsh [ ```sudo apt install zsh``` ]
-* oh-my-zsh [ ```sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"``` ]
-* [nvm](https://github.com/nvm-sh/nvm)
+## MUST READ
+This project assumes user is on **Debian based system, specifically Ubuntu** (It can be WSL).
 
 ## Installation
 ```
@@ -20,11 +12,24 @@ $ chmod +x start.sh
 $ ./start.sh
 ```
 
+## Components in the setup
+- Git (There only when this repo is downloaded as zip. Ideally, Git should be available since you are cloning this repo)
+- Zsh (Setups & makes it default shell)
+- Tmux
+- vim
+- dotfiles linking
+- Oh-My-Zsh
+  - zsh-autosuggestions
+- Vundle & Plugins
+- NVM & latest LTS node
+- Vim Plugins
+  - YouCompleteMe
+  - Powerline
+
 ## TODO
-- [x] Initial setup for bash prompt and bash profile
-- [ ] Add installation script for development environment setup
-- [x] Add configuration for vim
-- [x] Add overwrite option for changes done to initial files symlinks
+- [ ] Make each setup manual instead of package manager dependent
+- [ ] Add powerline configuration step for setup task
+- [ ] Add distinct component setup via. command line
 
 ## Thanks to...
 [Zach Holman](https://github.com/holman/) and
