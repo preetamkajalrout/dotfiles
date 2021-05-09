@@ -26,6 +26,7 @@ $ ./start.sh
 - Vim Plugins
   - YouCompleteMe
   - Powerline
+- Go (latest)
 
 ## TODO
 - [ ] Make each setup manual instead of package manager dependent
