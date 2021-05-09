@@ -112,5 +112,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-## Add XS CLI to path
-export PATH=$HOME/DEV_TOOLS/xs_tools/bin:$HOME/.local/bin:$PATH
+# Add go with environment variable
+export GO_DIR="$HOME/go"
+
+## Add custom bins
+export PATH=$PATH:$HOME/DEV_TOOLS/xs_tools/bin:$HOME/.local/bin:$GO_DIR/bin
