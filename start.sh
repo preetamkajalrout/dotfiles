@@ -36,6 +36,8 @@ pkg_pip3="python3-pip"
 pkg_nvm="https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh"
 pkg_vundle="https://github.com/VundleVim/Vundle.vim.git"
 pkg_ohmyzsh="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+pkg_powerline="powerline-status"
+pkg_powerlinefonts="https://github.com/powerline/fonts.git"
 
 link_file () {
   local src=$1 dst=$2
@@ -228,23 +230,27 @@ install_ycm () {
   success "vim-youcompleteme: completed! ${success_icon}"
 }
 
-install_powerline () {
-  info "powerline: processing..."
-  if [ -z "$(pip3 show powerline-status)" ] # '-z' => string is null, that is, has zero length
-  then
-    info "powerline: installing main package..."
-    pip3 install powerline-status
-  else
-    success "powerline: main package is already installed! ${success_icon}"
-  fi
-
+install_powerlinefonts () {
   info "powerline: installing/updating pre-patched fonts..."
-  git clone https://github.com/powerline/fonts.git --depth=1 $HOME/powerline-fonts/
+  git clone $pkg_powerlinefonts --depth=1 $HOME/powerline-fonts/
   $HOME/powerline-fonts/install.sh
   rm -rf $HOME/powerline-fonts/
   success "powerline: pre-patched fonts installed! ${succes_icon}"
   
   user "powerline: Cascadia Code fonts are not installed! It can be installed from 'https://github.com/microsoft/cascadia-code/releases'"
+}
+
+install_powerline () {
+  info "powerline: processing..."
+  if [ -z "$(pip3 show powerline-status)" ] # '-z' => string is null, that is, has zero length
+  then
+    info "powerline: installing main package..."
+    pip3 install $pkg_powerline
+  else
+    success "powerline: main package is already installed! ${success_icon}"
+  fi
+
+  install_powerlinefonts
   
   success "powerline: completed! ${success_icon}"
 
@@ -253,6 +259,51 @@ install_powerline () {
 install_vimplugins () {
   install_ycm
   install_powerline
+}
+
+install_go () {
+  info "go: processing..."
+  dir_go="$HOME/go"
+  dir_godl="$HOME/go-dl"
+  latest_gover=$(curl -s https://golang.org/VERSION?m=text) # get latest version from golang server
+  pkg_go="$latest_gover.linux-amd64.tar.gz"
+  pkg_go_src="https://golang.org/dl/$pkg_go"
+  is_install="false"
+  go_exists="false"
+
+  # check if go is already installed
+  if [ -d "$dir_go" ] # go is installed
+  then
+    if [ "$(go version | grep -oP 'go[0-9.]+')" != "$latest_gover" ] # check if latest go is installed
+    then
+      is_install="true"
+      go_exists="true"
+    fi
+  else # go is not installed
+    is_install="true"
+  fi
+  
+  # install if needed
+  if [ $is_install == "true" ]
+  then
+    # download package
+    info "go: downloading..."
+    mkdir -p $dir_godl
+    wget --no-check-certificate --continue --show-progress "$pkg_go_src" -P "$dir_godl"
+    if [ $go_exists == "true" ] # remove old go if updating
+    then
+      info "go: updating..."
+      rm -rf dir_go
+    else
+      info "go: installing..."
+    fi
+    tar -C $HOME -xzf "$dir_godl/$pkg_go"
+    rm -rf $dir_godl
+    success "go: completed! ${success_icon}"
+  else
+    success "go: already latest! ${success_icon}"
+  fi
+  
 }
 
 check_git () {
@@ -343,14 +394,15 @@ install_dotfiles () {
 }
 
 # Install modules/components dependent on core environment
-install_plugins () {
+setup_env () {
   install_ohmyzsh
   install_vundle
   install_nvm
   install_vimplugins
+  install_go
 }
 
 # Creates symlink for all the dotfiles in home directory
 check_prerequisites
 install_dotfiles
-install_plugins
+setup_env
