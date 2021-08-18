@@ -6,6 +6,7 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
@@ -90,7 +91,7 @@ nnoremap <C-H> <C-W><C-H>
 "8. Extra configuration
 let mapleader = ","
 map <Leader>s :w<cr>  " Save file with Ctrl-s
-map <Leader>q :q<cr> " Quit current tab, buffer, split
+map <Leader>q :q!<cr> " Quit current tab, buffer, split
 map <Leader>x :qa<cr> " Quit all buffers, tabs, splits and exit
 
 "9. Development configurations
