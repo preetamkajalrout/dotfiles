@@ -280,7 +280,7 @@ install_go () {
       go_exists="true"
     fi
   else # go is not installed
-    is_install="true"
+    is_install="false"
   fi
   
   # install if needed

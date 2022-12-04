@@ -1,8 +1,8 @@
 [user]
 	name = Preetam Kajal Rout
-	email = preetamkajalrout@gmail.com
+	email = 3712035+preetamkajalrout@users.noreply.github.com
 [core]
-	editor = vim
+	editor = nvim
 [color]
 	ui = auto
 [log]
