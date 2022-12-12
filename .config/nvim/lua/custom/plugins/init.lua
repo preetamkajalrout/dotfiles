@@ -1,0 +1,20 @@
+local plugin_dir = "custom.plugins."
+local config_dir = plugin_dir .. "configs."
+require(plugin_dir .. "plugininit")
+require(config_dir .. "nvimnotify")
+require(config_dir .. "colorscheme")
+require(config_dir .. "treesitter")
+require(config_dir .. "ts-context")
+require(config_dir .. "nvimtelescope")
+require(config_dir .. "autopairs")
+require(config_dir .. "comment")
+require(config_dir .. "gitsigns")
+require(config_dir .. "lualine")
+require(plugin_dir .. "lsp")
+require(config_dir .. "cmp")
+require(config_dir .. "whichkey") -- should be the last plugin to load
+require(config_dir .. "nullls")
+require(config_dir .. "dap")
+require(config_dir .. "dapjs")
+require(config_dir .. "dapui")
+require(config_dir .. "fterm")
