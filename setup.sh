@@ -164,7 +164,9 @@ setup_pkg() { # params: command as used in shells
 get_stable_rel() { #params: owner of repo, repo name
   repo_owner=$1
   repo_name=$2
-  stable_rel="$(curl https://api.github.com/repos/${repo_owner}/${repo_name}/releases | jq -r 'map(select(.prerelease == false))[0].tag_name')"
+  # stable_rel="$(curl https://api.github.com/repos/${repo_owner}/${repo_name}/releases | jq -r 'map(select(.prerelease == false))[0].tag_name')"
+  stable_rel="$(curl https://api.github.com/repos/${repo_owner}/${repo_name}/releases/latest | jq '.tag_name'
+
 }
 
 # setups the platform specific directory and script root directories
@@ -176,6 +178,7 @@ setup_scriptenv() {
   pkg_dl_dir=${download_dir}"/pkg"
   mkdir -p "$fonts_dl_dir"
   mkdir -p "$pkg_dl_dir"
+  mkdir -p "$usr_font_dir"
 }
 
 rm_scriptdirs() {
@@ -210,31 +213,43 @@ setup_jq() {
 
 # depends on unzip
 install_font() { # params: font-name
-  font=$1
+  local font=$1
+  local nf_base_dl_url=$2
   # download the zip file for the font, unzip to directory & copy to user font directory
   if [ ! -f "${fonts_dl_dir}/${font}.zip" ]; then
+    info "nerd-fonts:${font} : downloading ..."
     curl -L "${nf_base_dl_url}/${font}.zip" --output "${fonts_dl_dir}/${font}.zip"
   fi
-  unzip -o "${fonts_dl_dir}/${font}.zip" -d "${fonts_dl_dir}/${font}"
+  info "nerd-fonts:${font} : unzipping ..."
+  unzip -q -o "${fonts_dl_dir}/${font}.zip" -d "${fonts_dl_dir}/${font}"
   # copy the fonts to usr_font_dir
   if [[ -z $(find "${fonts_dl_dir}/${font}" -type f -name "*.otf*" \! -name "*Windows Compatible*") ]]; then
     font_ext="ttf"
   else
     font_ext="otf"
   fi
+  info "nerd-fonts:${font} : copying to ${usr_font_dir}/${font} ..."
   find "${fonts_dl_dir}/${font}" -type f -name "*.${font_ext}" \! -name "*Windows Compatible*" -exec cp -f {} "$usr_font_dir" \;
+  success "nerd-fonts:${font} : completed! ${success_icon}"
 }
 
 setup_nerdfonts() {
-  font_names=('CascadiaCode' 'Hack' 'Meslo')
+  local font_names=('CascadiaCode' 'Hack' 'Meslo')
   # first determine the latest stable tag
-  nf_repo_owner="ryanoasis"
-  nf_repo_name="nerd-fonts"
-  get_stable_rel $nf_repo_owner $nf_repo_name
-  nf_base_dl_url="https://github.com/${nf_repo_owner}/${nf_repo_name}/releases/download/${stable_rel}"
-  for font in "${font_names[@]}"; do
-    install_font "$font"
-  done
+  local nf_repo_owner="ryanoasis"
+  local nf_repo_name="nerd-fonts"
+  # only downlaod if nerd-fonts directory is not available already
+  info "nerd-fonts: checking ..."
+  if [[ -z $(ls "${usr_font_dir}" | grep Meslo) ]]; then
+    info "nerd-fonts: installing ...."
+    get_stable_rel $nf_repo_owner $nf_repo_name
+    local nf_base_dl_url="https://github.com/${nf_repo_owner}/${nf_repo_name}/releases/download/${stable_rel}"
+    for font in "${font_names[@]}"; do
+      install_font "$font" "${nf_base_dl_url}"
+    done
+  else
+    success "nerd-fonts: found! ${success_icon}"
+  fi
 
   #TODO: update font-cache for linux
 }
@@ -352,6 +367,14 @@ setup_p10k() {
 }
 
 setup_nvim() {
+  # dependencies:
+  #  - pbcopy - Mac (usually built-in), xsel (Linux/WSL2) - apt install xsel
+  #  - ripgrep
+  #  - https://github.com/sharkdp/fd
+  #  - tree-sitter-cli : (npm/cargo install tree-sitter-cli)
+  #  - nodejs is a hard - dependency
+  #  - python
+  #  - create directory ~/.virtualenvs/ & install package debugpy for nvim-dap to work correctly
   setup_pkg "nvim"
 }
 
@@ -454,7 +477,6 @@ setup_configuration() {
   install_dotfiles
 }
 
-
 main() {
   setup_scriptenv     # setups platform specific & root directories
   setup_prerequisites # setup git, unzip, brew, jq, nerdfonts
@@ -496,10 +518,8 @@ setup_programming() {
   # setup_jdk
 }
 
-
-
 lang() {
-  setup_programming   # setup python, nodejs, go, java (sap-jdk)
+  setup_programming # setup python, nodejs, go, java (sap-jdk)
   # echo "IN PROGRES, TRY LATER"
 }
 

@@ -2,7 +2,7 @@
 A personal set of dotfile configuration & script to automate the environment setup
 
 ## Pre-requisites
-* XCode Command Line Tools
+* XCode Command Line Tools [ `xcode-select --install` ]
 * [Homebrew](https://brew.sh/)
 * Homebrew Cask
 ```bash
@@ -13,33 +13,29 @@ $ brew tap cask
 ```
 $ git clone git@github.com:preetamkajalrout/dotfiles.git
 $ cd dotfiles
-$ chmod +x start.sh
-$ ./start.sh
+$ chmod +x setup.sh
+$ ./setup.sh main
 ```
 
 ## Components in the setup
-- tmux
+- git, brew, unzip, jq
+- nerd-fonts (CascadiaCode, Hack, Meslo)
 - neovim
-- pyenv
-  - Python 3
-- dotfiles symlinks
-- Oh-My-Zsh
+- zsh, oh-my-zsh (with plugins -- listed below), asdf
+- oh-my-zsh plugins
   - zsh-autosuggestions
-- vim-plug & neovim plugins
-- NVM & latest LTS node
-- Powerline
-  - Powerline fonts
-- Go (latest)
-- [Rectangle](https://rectangleapp.com)
+- asdf
+  - python
+  - nodejs
+  - golang
+- dotfiles symlinks
 
 ## TODO
-- [ ] Change setup to be brew based for MacOS setup
+- [X] Change setup to be brew based for MacOS setup
 - [ ] Add distinct component setup via. command line
-
-## Thanks to...
-[Zach Holman](https://github.com/holman/) and
-[Mathias Bynens](https://github.com/mathiasbynens).
-A lot of initial ideas were picked up from their dotfiles.
+- [ ] neovim package bug
+- [ ] merge dotfiles with their respective tool setup / add tool specific location e.g. kitty should store in '~/.config/kitty/kitty.conf' not on '~/.kitty.conf'
+- [ ] Add rectangleapp, karabiner config for macos based system
 
 ## License
 This project is licensed under [MIT License](./LICENSE)
