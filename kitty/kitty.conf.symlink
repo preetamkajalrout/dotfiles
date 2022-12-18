@@ -1,6 +1,6 @@
 
 # Font config
-font_size 15.5
+font_size 15
 font_family MesloLGS Nerd Font 
 # font_family Hack Nerd Font
 # font_family CaskaydiaCove Nerd Font Mono
@@ -29,14 +29,28 @@ color15 #abb2bf
 selection_foreground #282c34
 selection_background #979eab
 
+# Kitty specific settings
+confirm_os_window_close 0
+window_padding_width  1
+hide_window_decorations titlebar-only
+
 # Cursor config
 cursor_text_color #abb2bf
 
 # Terminal Bell
 enable_audio_bell no
 
+# Tab bar config
+tab_bar_align right
+tab_title_template  {fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{index}:{tab.active_wd[tab.active_wd.rfind("/"):]}
+
+# tab_bar_style separator
+# tab_separator " ║"
+tab_bar_style powerline
+tab_powerline_style round
+
+
 # OS specific tweaks
-#191c20
-macos_titlebar_color #232323
+# macos_titlebar_color #191c20
 macos_option_as_alt both
-macos_thicken_font 0.1
+macos_thicken_font 0.2

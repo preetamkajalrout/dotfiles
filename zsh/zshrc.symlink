@@ -35,6 +35,9 @@ source $ZSH/oh-my-zsh.sh
 ## unset LESS to bring back normal bash pager option
 unset LESS
 
+# Set editor to nvim
+export EDITOR="$brew_path/nvim"
+
 # env variable to be used by asdf-rust to avoid installation of docs locally for each version
 export RUST_WITHOUT=rust-docs
 
