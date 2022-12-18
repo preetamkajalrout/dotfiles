@@ -89,9 +89,17 @@ local function project_root_dir()
 	return repo_path
 end
 
+prj_root = project_root_dir()
+lg_root = ""
+if not prj_root then
+  lg_root = "lazygit"
+else
+  lg_root = "lazygit --path " .. prj_root
+end
+
 local lazygit = fterm:new({
 	ft = "fterm_lazygit",
-	cmd = "lazygit --path " .. project_root_dir(),
+	cmd = lg_root,
 	dimensions = {
 		height = 0.9,
 		width = 0.9,
