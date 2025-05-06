@@ -1,3 +1,4 @@
+require "custom.plugins.lsp.cds"
 local km = vim.keymap.set
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -52,6 +53,12 @@ if not lspcfg_status_ok then
   })
   return
 end
+-- Setup custom CDS LSP  
+lspconfig["cds"].setup({
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities
+})
 lspconfig["pyright"].setup({
     on_attach = on_attach,
     flags = lsp_flags,

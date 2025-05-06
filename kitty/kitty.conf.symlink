@@ -53,4 +53,4 @@ tab_powerline_style round
 # OS specific tweaks
 # macos_titlebar_color #191c20
 macos_option_as_alt both
-macos_thicken_font 0.2
+macos_thicken_font 0.1

@@ -3,7 +3,13 @@
 	email = 3712035+preetamkajalrout@users.noreply.github.com
 [core]
 	editor = nvim
+	autocrlf = input
 [color]
 	ui = auto
 [log]
 	decorate = auto
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

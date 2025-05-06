@@ -53,11 +53,6 @@ km("v", ">", ">gv", opts)
 km("v", "<A-j>", ":m .+1<CR>gv-gv", opts)
 km("v", "<A-k>", ":m .-2<CR>gv-gv", opts)
 
--- Visual Block --
--- Move text up & down
-km("x", "J", ":move '>+1<CR>gv-gv", opts)
-km("x", "K", ":move '<-2<CR>gv-gv", opts)
-
 -- Terminal --
 -- Better terminal navigation
 km("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)

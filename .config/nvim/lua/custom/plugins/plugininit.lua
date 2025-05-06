@@ -45,6 +45,17 @@ return packer.startup(function(use)
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
   use "rcarriga/nvim-notify" -- Fancy notification plugin
+  --[[ use {
+    "nathom/filetype.nvim",
+    config = function () require("filetype").setup({
+      overrides = {
+        extensions = {
+          cds = "cds",
+        }
+      }
+    })
+    end
+  } ]] -- Filetype replacement for native filetype.vim
   use { -- dev icons required by tools like telescope & more
     "nvim-tree/nvim-web-devicons",
     config = function () require("nvim-web-devicons").setup({}) end
@@ -71,6 +82,19 @@ return packer.startup(function(use)
   use {
     "jose-elias-alvarez/null-ls.nvim",
     requires = { "nvim-lua/plenary.nvim", opt = true }
+  }
+  
+  -- File explorer : nvim-tree
+  use {
+    "nvim-tree/nvim-tree.lua",
+    config = function ()
+      require("nvim-tree").setup({
+        hijack_cursor = true,
+        prefer_startup_root = true,
+        update_focused_file = { enable = true },
+        filters = { dotfiles = true },
+      })
+    end
   }
 
   -- Theme Plugin -- Configuration for the same should be available in colorscheme.lua
@@ -121,6 +145,17 @@ return packer.startup(function(use)
   use "nvim-treesitter/nvim-treesitter-context"
   use "nvim-treesitter/nvim-treesitter-refactor"
   use "JoosepAlviste/nvim-ts-context-commentstring"
+  
+  -- TextMate Grammer support
+  --[[ use { -- extension grammer & theme directories: ~/.config/nvim/lua/nvim-textmate/, ~/.editor/extensions/, ~/.vscode/extensions/
+    "icedman/nvim-textmate",
+    run = function ()
+      require("nvim-textmate").setup({
+        quick_load = true,
+        override_colorscheme = false
+      })
+    end
+  } ]]
 
   -- Telescope
   use { "nvim-telescope/telescope.nvim", tag = "0.1.0",
@@ -137,13 +172,14 @@ return packer.startup(function(use)
   use "folke/which-key.nvim"
 
   -- nvm-dap debugging plugins
-  use "mfussenegger/nvim-dap"
+  use { "mfussenegger/nvim-dap", cond = "vim.g.vscode" }
   use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
   use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
   use {
     "microsoft/vscode-js-debug",
     opt = true,
-    run = "npm install --legacy-peer-deps && npm run compile"
+    run = "npm install --legacy-peer-deps && npm run compile",
+    cond = "vim.g.vscode"
   }
   -- Trouble -- used to show code diagnostics in a pane
   use {

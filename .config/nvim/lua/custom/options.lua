@@ -35,3 +35,21 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+-- Set global options
+
+local global_opts = {
+  loaded_netrw = 1, -- disables 'netrw' plugin for other file explorers
+  loaded_netrwPlugin = 1, -- disables 'netrw' plugin for other file explorers
+}
+
+for gk, gv in pairs(global_opts) do
+  vim.g[gk] = gv
+end
+
+-- set filetypes
+vim.filetype.add({
+  extension = {
+    cds = 'cds',
+  }
+})

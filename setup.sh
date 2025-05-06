@@ -506,10 +506,72 @@ setup_nodejs() {
 }
 
 setup_go() {
-  install_pkg "coreutils" # dependency for asdf-golang
-  install_asdf_plugin "golang"
+  local go_site_root="https://go.dev"
+  local latest_gover=$(curl -sL "$go_site_root/VERSION?m=text")
+  local pkg_go = ""
+  # Check if Go is installed
+  check_command "go"
+  local is_go_available=$1
+  if [[ $is_go_available == 0 ]]; then
+    if [ $platform == "mac" ] then
+      $pkg_go="$go_ver.darwin-arm64.pkg"
+      # download the pkg
+      curl --create-dirs -LO "$go_site_root/dl/$pkg_go" --output-dir ~/downloads/go
+      # install the package
+      sudo installer -pkg "~/downloads/go/$pkg_go" -target LocalSystem
+    else
+      $pkg_go="$go_ver.linux-amd64.tar.gz"
+    fi 
+  else
+    success "Go is already installed"
+  fi
+
 }
 
+install_go () {
+  info "go: processing..."
+  dir_go="$HOME/go"
+  dir_godl="$HOME/go-dl"
+  latest_gover=$(curl -s https://golang.org/VERSION?m=text) # get latest version from golang server
+  pkg_go="$latest_gover.linux-amd64.tar.gz"
+  pkg_go_src="https://golang.org/dl/$pkg_go"
+  is_install="false"
+  go_exists="false"
+
+  # check if go is already installed
+  if [ -d "$dir_go" ] # go is installed
+  then
+    if [ "$(go version | grep -oP 'go[0-9.]+')" != "$latest_gover" ] # check if latest go is installed
+    then
+      is_install="true"
+      go_exists="true"
+    fi
+  else # go is not installed
+    is_install="false"
+  fi
+  
+  # install if needed
+  if [ $is_install == "true" ]
+  then
+    # download package
+    info "go: downloading..."
+    mkdir -p $dir_godl
+    wget --no-check-certificate --continue --show-progress "$pkg_go_src" -P "$dir_godl"
+    if [ $go_exists == "true" ] # remove old go if updating
+    then
+      info "go: updating..."
+      rm -rf dir_go
+    else
+      info "go: installing..."
+    fi
+    tar -C $HOME -xzf "$dir_godl/$pkg_go"
+    rm -rf $dir_godl
+    success "go: completed! ${success_icon}"
+  else
+    success "go: already latest! ${success_icon}"
+  fi
+  
+}
 setup_programming() {
   setup_asdf # dependency for nodejs, python
   setup_python
