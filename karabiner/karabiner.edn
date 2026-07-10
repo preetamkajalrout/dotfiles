@@ -1,0 +1,84 @@
+{
+  ;; ALWAYS change this file and run `goku` to update ~/.config/karabiner/karabiner.json automatically
+  :devices {
+    ;; source: [fn] [ctrl] [option] [cmd] [spacebar] [cmd] [option]
+    ;; target: [cmd/ctrl] [fn] [ctrl/cmd] [option] [spacebar] [option] [cmd]
+    :kb_internal [{:is_built_in_keyboard true}]
+    ;; source: [ctrl] [cmd] [option] [spacebar] [option] [empty] [application] [ctrl]
+    ;; target: [cmd] [ctrl] [option] [spacebar] [option] [empty] [application] [ctrl]
+    :kb_corsair_k100_opx [{:vendor_id 6940 :product_id 7109}] ; This information can be retrieved from Devices section of Karabiner app
+    
+    }
+  :profiles {
+    :Default {:default true
+               :alone 200
+              }
+    }
+  :applications {
+    :terminal_apps ["^net.kovidgoyal.kitty$"
+                    "^com.apple.Terminal$"]
+    :qalculate ["^.*/qalculate-gtk$"]
+    }
+  :main [
+    ;; Default rules based on devices check
+    {:des "All Modifications"
+     :rules [[:caps_lock :escape]
+             [:escape :caps_lock]
+             ;; Apple Keyboard Mapping
+             [:##fn :left_command [:kb_internal :!terminal_apps]]
+             [:##fn :left_control [:kb_internal :terminal_apps]] ; fn => ctrl for kitty
+             [:##left_control :fn [:kb_internal]]
+             [:##left_option :left_control [:kb_internal :!terminal_apps]]
+             [:##left_option :left_command [:kb_internal :terminal_apps]] ; [any]+option => cmd for kitty
+             [:##left_command :left_option [:kb_internal]]
+             [:##right_command :right_option [:kb_internal]]
+             [:##right_option :right_command [:kb_internal]]
+
+             ;; External (Windows style) Keyboard Mapping
+             [:##left_control :left_command [:kb_corsair_k100_opx :!terminal_apps]] ; swap ctrl => cmd except inside kitty
+             [:##left_command :left_control [:kb_corsair_k100_opx :!terminal_apps]] ; swap cmd => ctrl except inside kitty
+             [:##application :fn]
+
+             ;; Combination Modification (Shared)
+             [:!O#Stab :!Ctab] ; l_option+[l_shift]+tab => l_cmd+[l_shift]+tab
+             [:!O#Sgrave_accent_and_tilde :!Cgrave_accent_and_tilde] ; l_option+[l_shift]+~ => l_cmd+[l_shift]+~
+             [:!C##tab :!Ttab] ; l_command+[any]+tab => l_ctrl+[any]+tab
+             
+             ;; Fn / Globe / application key
+             [:!Efn :button2 [:kb_internal]] ; r_option+fn => right click on mouse
+             [:!Eapplication :button2 [:kb_corsair_k100_opx]] ;r_option+application => right click on mouse
+
+             ;; Application Specific Tweaks
+             [:!Cq :!Tq [:qalculate]] ; qalculate: cmd+q => ctrl+q
+
+             ;; Terminal Specific Tweaks to harmonize rectangle shortcuts
+             ;; Mission Control
+             [:!Cup_arrow :!Tup_arrow [:terminal_apps]]
+             [:!Cdown_arrow :!Tdown_arrow [:terminal_apps]]
+             ;; Space Navigation
+             [:!Cright_arrow :!Tright_arrow [:terminal_apps]]
+             [:!Cleft_arrow :!Tleft_arrow [:terminal_apps]]
+             ;; Window Movement between Display
+             [:!CSright_arrow :!TSright_arrow [:terminal_apps]]
+             [:!CSleft_arrow :!TSleft_arrow [:terminal_apps]]
+             ;; Window Movement - Halfs
+             [:!COup_arrow :!TOup_arrow [:terminal_apps]]
+             [:!COright_arrow :!TOright_arrow [:terminal_apps]]
+             [:!COdown_arrow :!TOdown_arrow [:terminal_apps]]
+             [:!COleft_arrow :!TOleft_arrow [:terminal_apps]]
+             ;; Window movement - Quarters
+             [:!COu :!TOu [:terminal_apps]]
+             [:!COi :!TOi [:terminal_apps]]
+             [:!COk :!TOk [:terminal_apps]]
+             [:!COj :!TOj [:terminal_apps]]
+             ;; Center, Maximize, Reset
+             [:!COreturn_or_enter :!TOreturn_or_enter [:terminal_apps]]
+             [:!COdelete_or_backspace :!TOdelete_or_backspace [:terminal_apps]]
+             [:!COc :!TOc [:terminal_apps]]
+             ;;Increment, Decrement
+             [:!COhyphen :!TOhyphen [:terminal_apps]]
+             [:!COequal_sign :!TOequal_sign [:terminal_apps]]
+             ]
+      }
+  ]
+  }

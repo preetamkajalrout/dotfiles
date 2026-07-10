@@ -42,6 +42,9 @@ unset LESS
 # Set editor to nvim
 export EDITOR="$brew_path/nvim"
 
+# Config for Karabiner Goku
+export GOKU_EDN_CONFIG_FILE="$HOME/dotfiles/karabiner/karabiner.edn"
+
 # env variable to be used by asdf-rust to avoid installation of docs locally for each version
 export RUST_WITHOUT=rust-docs
 
