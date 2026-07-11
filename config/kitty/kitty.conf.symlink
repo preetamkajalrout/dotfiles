@@ -1,0 +1,76 @@
+
+# Font config
+font_size 15
+font_family MesloLGS Nerd Font 
+# font_family Hack Nerd Font
+# font_family CaskaydiaCove Nerd Font Mono
+
+# Kitty specific settings
+confirm_os_window_close 0
+window_padding_width  1
+hide_window_decorations titlebar-only
+
+# Cursor config
+cursor_text_color #abb2bf
+
+# Terminal Bell
+enable_audio_bell no
+
+# Tab bar config
+tab_bar_align right
+tab_title_template  {fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{index}:{tab.active_wd[tab.active_wd.rfind("/"):]}
+
+# tab_bar_style separator
+# tab_separator " ║"
+tab_bar_style powerline
+tab_powerline_style round
+
+## Split Layout
+
+enabled_layouts splits:split_axis=horizontal
+
+# Create a new window splitting the space used by the existing one so that
+# the two windows are placed one above the other
+map kitty_mod+\>h launch --location=hsplit
+
+# Create a new window splitting the space used by the existing one so that
+# the two windows are placed side by side
+map kitty_mod+\>v launch --location=vsplit
+
+# Create a new window splitting the space used by the existing one so that
+# the two windows are placed side by side if the existing window is wide or
+# one above the other if the existing window is tall.
+map kitty_mod+\>s launch --location=split
+
+# Rotate the current split, changing its split axis from vertical to
+# horizontal or vice versa
+map kitty_mod+\>r layout_action rotate
+
+# Move the active window in the indicated direction
+map shift+up move_window up
+map shift+left move_window left
+map shift+right move_window right
+map shift+down move_window down
+
+# Move the active window to the indicated screen edge
+map cmd+shift+up layout_action move_to_screen_edge top
+map cmd+shift+left layout_action move_to_screen_edge left
+map cmd+shift+right layout_action move_to_screen_edge right
+map cmd+shift+down layout_action move_to_screen_edge bottom
+
+# Switch focus to the neighboring window in the indicated direction
+map cmd+left neighboring_window left
+map cmd+right neighboring_window right
+map cmd+up neighboring_window up
+map cmd+down neighboring_window down
+
+# Set the bias of the split containing the currently focused window. The
+# currently focused window will take up the specified percent of its parent
+# window's size.
+map kitty_mod+. layout_action bias 80
+
+
+# OS specific tweaks
+# macos_titlebar_color #191c20
+macos_option_as_alt both
+macos_thicken_font 0.1
