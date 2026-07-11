@@ -22,8 +22,8 @@
   :main [
     ;; Default rules based on devices check
     {:des "All Modifications"
-     :rules [[:caps_lock :escape]
-             [:escape :caps_lock]
+     :rules [[:##caps_lock :escape]
+             [:##escape :caps_lock]
              ;; Apple Keyboard Mapping
              [:##fn :left_command [:kb_internal :!terminal_apps]]
              [:##fn :left_control [:kb_internal :terminal_apps]] ; fn => ctrl for kitty
