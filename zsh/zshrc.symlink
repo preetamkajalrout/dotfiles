@@ -16,19 +16,9 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Sets homebrew based on macos processor
-if [ "$(sysctl -n sysctl.proc_translated)" = "1" ]; then
-    local brew_path="/usr/local/homebrew/bin"
-else
-    local brew_path="/opt/homebrew/bin"
-fi
-export PATH="${brew_path}:${PATH}"
-
-
 plugins=(
     git
     zsh-autosuggestions
-    mise
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -37,52 +27,22 @@ source $ZSH/oh-my-zsh.sh
 unset LESS
 
 ## Add all aliases
-. ~/.zsh_aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
 
 # Set editor to nvim
-export EDITOR="$brew_path/nvim"
+export EDITOR="nvim"
 
 # Config for Karabiner Goku
 export GOKU_EDN_CONFIG_FILE="$HOME/dotfiles/karabiner/karabiner.edn"
 
-# env variable to be used by asdf-rust to avoid installation of docs locally for each version
-export RUST_WITHOUT=rust-docs
-
-# Add FLUTTER to path
-export FLUTTER_DIR="$HOME/DEV_TOOLS/flutter"
-
-# Add ANDROID SDK related variables
-export ANDROID_SDK_HOME="$HOME/Library/Android/sdk"
-export ANDROID_EMULATOR_BIN="$ANDROID_SDK_HOME/emulator"
-export ANDROID_PLT_TOOLS_BIN="$ANDROID_SDK_HOME/platform-tools"
-export ANDROID_CLI_TOOLS_BIN="$ANDROID_SDK_HOME/cmdline-tools/latest/bin"
-
-# Add GO related variables
-export GO_DIR="$HOME/go"
-
-# Add java home environment variable
-# export JAVA_HOME="$HOME/DEV_TOOLS/sapmachine-jdk-17.0.2.jdk/Contents/Home/"
-# export JAVA_BIN="$HOME/DEV_TOOLS/sapmachine-jdk-17.0.2.jdk/Contents/Home/bin"
-
 ## Add custom bins
-# 1. xs tools
-# 2. local bin
-export PATH=$PATH:$FLUTTER_DIR/bin:$HOME/DEV_TOOLS/xs_tools/bin:$HOME/.local/bin:$ANDROID_CLI_TOOLS_BIN:$ANDROID_PLT_TOOLS_BIN:$ANDROID_EMULATOR_BIN:$GO_DIR/bin
-
+export PATH=$PATH:$HOME/.local/bin
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# pnpm
-export PNPM_HOME="/Users/pkr/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
-
 
 # cds completion start
 
@@ -95,4 +55,8 @@ if [ -r "$CDS_PROFILE" ]; then
 fi
 
 # cds completion end
-# SAP_BTP_CLI_AUTOCOMPLETE="/Users/pkr/Library/Application Support/.btp/autocomplete/scripts/sapbtpcli-autocomplete.plugin.zsh" && fpath=("${SAP_BTP_CLI_AUTOCOMPLETE}" $fpath) && autoload -U compinit && compinit && source "${SAP_BTP_CLI_AUTOCOMPLETE}"
+# Initialize mise
+if command -v mise &> /dev/null; then
+    eval "$(mise activate zsh)"
+fi
+

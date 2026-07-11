@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+DOTFILES_DIR="$HOME/dotfiles"
+
+# Source all .aliases files from dotfiles subdirectories
+for alias_file in "$DOTFILES_DIR"/*/.aliases; do
+  if [[ -f "$alias_file" ]]; then
+    source "$alias_file"
+  fi
+done
+
+if command -v fdfind &> /dev/null; then
+  alias fd='fdfind'
+fi
+
+if command -v batcat &> /dev/null; then
+  alias bat='batcat'
+fi
