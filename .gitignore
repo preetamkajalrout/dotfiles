@@ -1,2 +1,6 @@
 /node_modules/
 /**/.tmp
+.vscode/
+.lsp/.cache
+.clj-kondo/.cache
+.DS_Store
