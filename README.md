@@ -6,6 +6,9 @@ Personal dotfile configuration & scripts to automate environment setup on macOS 
 * XCode Command Line Tools: `xcode-select --install`
 * [Homebrew](https://brew.sh/)
 
+## Pre-requisites (Linux)
+* `apt install git`
+
 ## Installation
 ```bash
 git clone git@github.com:preetamkajalrout/dotfiles.git

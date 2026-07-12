@@ -1,7 +1,6 @@
 # Aptfile — Linux package manifest
 # This file is read by setup.sh to install apt packages
 
-git
 unzip
 jq
 zsh
