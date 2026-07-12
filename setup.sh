@@ -317,14 +317,32 @@ help() {
 EOF
 }
 
-if [[ "${1:-}" == "--dry-run" ]]; then
-  DRY_RUN="true"
-  info "DRY RUN MODE - no changes will be made"
-  shift
-fi
+CMD=""
 
-if [[ $# -eq 0 ]]; then
-  help
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --dry-run)
+      DRY_RUN="true"
+      info "DRY RUN MODE - no changes will be made"
+      shift
+      ;;
+    help)
+      help
+      exit 0
+      ;;
+    main)
+      CMD="main"
+      shift
+      ;;
+    *)
+      help
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$CMD" == "main" ]]; then
+  main
 else
-  "$@"
+  help
 fi

@@ -5,9 +5,9 @@ PASS=0
 FAIL=0
 WARN=0
 
-pass() { ((PASS++)); printf "  [OK] %s\n" "$1"; }
-fail() { ((FAIL++)); printf "  [FAIL] %s\n" "$1"; }
-warn() { ((WARN++)); printf "  [WARN] %s\n" "$1"; }
+pass() { PASS=$((PASS + 1)); printf "  [OK] %s\\n" "$1"; }
+fail() { FAIL=$((FAIL + 1)); printf "  [FAIL] %s\\n" "$1"; }
+warn() { WARN=$((WARN + 1)); printf "  [WARN] %s\\n" "$1"; }
 
 check_cmd() {
   local cmd="$1"
@@ -49,7 +49,7 @@ echo "Dotfiles Environment Tests"
 echo "--------------------------"
 
 echo "Shell:"
-if [[ "$SHELL" == *"zsh"* ]]; then pass "Default shell is zsh"; else fail "Default shell is NOT zsh"; fi
+if [[ "${SHELL:-}" == *"zsh"* ]]; then pass "Default shell is zsh"; else fail "Default shell is NOT zsh"; fi
 
 echo "Core Stack:"
 check_cmd "git"
@@ -85,6 +85,10 @@ echo "XDG Config Symlinks (~/.config):"
 for src in "$DOTFILES_DIR"/config/*; do
   if [[ -d "$src" ]]; then
     base="$(basename "$src")"
+    if [[ "$base" == "kitty" ]]; then
+      check_symlink "$HOME/.config/kitty/kitty.conf" "$src/kitty.conf.symlink"
+      continue
+    fi
     check_symlink "$HOME/.config/$base" "$src"
   fi
 done
