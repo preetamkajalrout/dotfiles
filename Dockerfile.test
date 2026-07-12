@@ -1,0 +1,33 @@
+# A stripped-down Linux environment to test dotfiles idempotency and installation
+FROM ubuntu:latest
+
+# Prevent interactive prompts (like timezone selection) during apt installs
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install base dependencies required by setup.sh and tests
+RUN apt-get update && apt-get install -y \
+    sudo \
+    git \
+    curl \
+    ca-certificates \
+    unzip \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user to realistically simulate a personal Linux machine
+# setup.sh uses sudo, so the user needs NOPASSWD sudo access
+RUN useradd -m -s /bin/bash tester && \
+    echo "tester ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Switch to the test user
+USER tester
+WORKDIR /home/tester
+
+# Copy the local dotfiles directory directly into the container
+COPY --chown=tester:tester . /home/tester/dotfiles
+
+# Drop into the dotfiles directory on startup
+WORKDIR /home/tester/dotfiles
+
+# Open an interactive bash shell by default
+CMD ["/bin/bash"]
