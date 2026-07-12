@@ -29,7 +29,7 @@ local options = {
   scrolloff = 8,                 -- keeps 8 lines extra shown around cursor line vertically; better if reading through code
   sidescrolloff = 8,            -- same as above except columns are shown horizontally;
   completeopt = "menu,menuone,noselect", -- sets up behaviour for completion popup and force select from the popup
-  timeoutlen = 500,           -- makes 'which-key' popup faster
+  timeoutlen = 500,           -- makes popup menus faster
 }
 
 for k, v in pairs(options) do
@@ -39,8 +39,8 @@ end
 -- Set global options
 
 local global_opts = {
-  loaded_netrw = 1, -- disables 'netrw' plugin for other file explorers
-  loaded_netrwPlugin = 1, -- disables 'netrw' plugin for other file explorers
+  netrw_liststyle = 3, -- 3 = tree view style
+  netrw_banner = 0,    -- hides the bulky help banner
 }
 
 for gk, gv in pairs(global_opts) do

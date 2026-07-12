@@ -56,7 +56,7 @@ local progress = function()
 end
 
 local spaces = function()
-	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+	return "spaces: " .. vim.bo[0].shiftwidth
 end
 
 lualine.setup({
@@ -65,7 +65,7 @@ lualine.setup({
 		theme = "auto",
     component_separators = { left = "", right = ""},
     section_separators = { left = "", right = ""},
-		disabled_filetypes = { }, -- { "dashboard", "NvimTree", "Outline" },
+		disabled_filetypes = { }, -- { "dashboard", "Outline" },
 		always_divide_middle = true,
 	},
 	sections = {

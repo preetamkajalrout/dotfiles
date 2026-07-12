@@ -9,7 +9,7 @@ end
 
 treesitter_cfg.setup({
   -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust", "go", "python", "javascript" }, -- parsers with maintainers 
+  ensure_installed = { "c", "lua", "rust", "python", "javascript" }, -- parsers with maintainers 
   sync_install = false,
   highlight = {
     enable = true,
@@ -23,18 +23,10 @@ treesitter_cfg.setup({
   autopairs = {
     enable = true
   },
-  rainbow = { -- remove this plugin in case of error `invalid node at position xxx`
-    enable = true,
-    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-    max_file_lines = nil, -- Do not enable for files with more than n lines, int
-    -- colors = {}, -- table of hex strings
-    -- termcolors = {} -- table of colour name strings
-  },
   refactor = {
     highlight_definitions = {
       enable = true,
-      -- Set to false if you have an `updatetime` of ~100.
+      -- Set to false if we have an `updatetime` of ~100.
       clear_on_cursor_move = true,
     },
     highlight_current_scope = { enable = false },
@@ -44,9 +36,5 @@ treesitter_cfg.setup({
         smart_rename = "grr",
       },
     },
-  },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
   },
 })

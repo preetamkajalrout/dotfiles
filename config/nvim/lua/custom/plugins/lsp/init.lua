@@ -10,7 +10,7 @@ km("n", ']d', vim.diagnostic.goto_next, opts)
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", 'v:lua.vim.lsp.omnifunc')
+  vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -42,8 +42,8 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- blink.cmp supports LSP capabilities, so advertise it to LSP servers
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 -- TODO: Each server config should be configured via. loop instead of long list of file
 local lspcfg_status_ok, lspconfig = pcall(require, "lspconfig")
@@ -64,7 +64,7 @@ lspconfig["pyright"].setup({
     flags = lsp_flags,
     capabilities = capabilities
 })
-lspconfig["tsserver"].setup({
+lspconfig["ts_ls"].setup({
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities
@@ -78,7 +78,7 @@ lspconfig["rust_analyzer"].setup({
       ["rust-analyzer"] = {}
     }
 })
-lspconfig["sumneko_lua"].setup({
+lspconfig["lua_ls"].setup({
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
