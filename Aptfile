@@ -10,3 +10,4 @@ ripgrep
 fd-find
 bat
 fzf
+lldb
