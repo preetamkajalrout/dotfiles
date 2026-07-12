@@ -1,0 +1,8 @@
+[tools]
+"aqua:astral-sh/uv" = "latest"
+node = "lts"
+python = "3"
+usage = "latest"
+gitui = "latest"
+delta = "latest"
+aube = "latest"
