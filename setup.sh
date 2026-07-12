@@ -152,31 +152,22 @@ setup_zsh() {
   backup_bash_configs
 }
 
-setup_omz() {
-  info "oh-my-zsh: checking..."
-  if [[ -d "$HOME/.oh-my-zsh" ]]; then
-    success "oh-my-zsh: already installed"
-  else
-    info "oh-my-zsh: installing..."
-    if [[ "$DRY_RUN" != "true" ]]; then
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    fi
-    success "oh-my-zsh: installed"
-  fi
-
-  info "oh-my-zsh: checking plugins..."
-  local plugins_dir="$HOME/.oh-my-zsh/custom/plugins"
+setup_zsh_plugins() {
+  info "zsh-plugins: checking..."
+  local plugins_dir="$HOME/zsh-plugins"
   local plugin_name="zsh-autosuggestions"
   local plugin_repo="https://github.com/zsh-users/zsh-autosuggestions"
 
+  mkdir -p "$plugins_dir"
+
   if [[ -d "$plugins_dir/$plugin_name" ]]; then
-    success "oh-my-zsh plugin: ${plugin_name} already installed"
+    success "zsh-plugins: ${plugin_name} already installed"
   else
-    info "oh-my-zsh plugin: ${plugin_name} installing..."
+    info "zsh-plugins: ${plugin_name} installing..."
     if [[ "$DRY_RUN" != "true" ]]; then
       git clone "$plugin_repo" "$plugins_dir/$plugin_name"
     fi
-    success "oh-my-zsh plugin: ${plugin_name} installed"
+    success "zsh-plugins: ${plugin_name} installed"
   fi
 }
 
@@ -231,8 +222,14 @@ install_dotfiles() {
   mkdir -p "$HOME/.config"
   for src in "$DOTFILES_DIR"/config/*; do
     if [[ -d "$src" ]]; then
-      local base="$(basename "$src")"
-      local dst="$HOME/.config/$base"
+      base="$(basename "$src")"
+      
+      # Skip kitty, handled explicitly below to avoid git pollution
+      if [[ "$base" == "kitty" ]]; then
+        continue
+      fi
+
+      dst="$HOME/.config/$base"
       
       if [[ "$DRY_RUN" == "true" ]]; then
         info "[DRY RUN] link $src -> $dst"
@@ -241,8 +238,15 @@ install_dotfiles() {
       fi
     fi
   done
-}
 
+  # 3. Explicit File Links (to prevent polluting the dotfiles repo with auto-generated state)
+  info "Linking explicit config files..."
+  mkdir -p "$HOME/.config/kitty"
+  if [[ "$DRY_RUN" == "true" ]]; then
+    info "[DRY RUN] link $DOTFILES_DIR/config/kitty/kitty.conf.symlink -> $HOME/.config/kitty/kitty.conf"
+  else
+    link_file "$DOTFILES_DIR/config/kitty/kitty.conf.symlink" "$HOME/.config/kitty/kitty.conf"
+  fi
 }
 
 setup_rust() {
@@ -271,7 +275,7 @@ main() {
 
   setup_rust
   setup_zsh
-  setup_omz
+  setup_zsh_plugins
   setup_p10k
   install_dotfiles
 
