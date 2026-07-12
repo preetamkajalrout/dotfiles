@@ -1,12 +1,10 @@
 brew "jq"
 brew "unzip"
 brew "mise"
-brew "gitui"
 brew "ripgrep"
 brew "fd"
 brew "bat"
 brew "fzf"
-brew "git-delta"
 tap "yqrashawn/goku"
 brew "yqrashawn/goku/goku"
 

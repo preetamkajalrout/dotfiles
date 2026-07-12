@@ -6,7 +6,6 @@ unzip
 jq
 zsh
 neovim
-gitui
 ripgrep
 fd-find
 bat
