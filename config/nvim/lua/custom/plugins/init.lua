@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.fn.isdirectory(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git", "clone", "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath,
@@ -9,10 +9,19 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   { "nvim-lua/plenary.nvim", lazy = true },
+  
+  -- CDS Syntax Highlighting
+  { "preetamkajalrout/cds.vim" },
+
   -- Icons
   {
     "nvim-tree/nvim-web-devicons",
     config = function() require("nvim-web-devicons").setup({}) end,
+  },
+
+  -- Colorscheme
+  {
+    "navarasu/onedark.nvim",
   },
 
   -- Auto Dark Mode
@@ -21,11 +30,17 @@ require("lazy").setup({
     opts = {
       set_dark_mode = function()
         vim.api.nvim_set_option("background", "dark")
-        vim.cmd("colorscheme default")
+        pcall(function()
+          require("onedark").setup({ style = "deep" })
+          require("onedark").load()
+        end)
       end,
       set_light_mode = function()
         vim.api.nvim_set_option("background", "light")
-        vim.cmd("colorscheme default")
+        pcall(function()
+          require("onedark").setup({ style = "light" })
+          require("onedark").load()
+        end)
       end,
     },
   },
@@ -70,7 +85,12 @@ require("lazy").setup({
     dependencies = 'rafamadriz/friendly-snippets',
     version = '*',
     opts = {
-      keymap = { preset = 'default' },
+      keymap = { 
+        preset = 'default',
+        ['<CR>'] = { 'accept', 'fallback' },
+        ['<Tab>'] = { 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'fallback' },
+      },
       appearance = { use_nvim_cmp_as_default = true },
       sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
     },

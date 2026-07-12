@@ -1,4 +1,4 @@
-local ts_status_ok, treesitter_cfg = pcall(require, "nvim-treesitter.configs")
+local ts_status_ok, treesitter_cfg = pcall(require, "nvim-treesitter")
 if not ts_status_ok then
   vim.notify("nvim-treesitter couldn't be loaded", "error", {
     title = "nvim-treesitter/nvim-treesitter"
@@ -6,6 +6,9 @@ if not ts_status_ok then
   return
 end
 
+vim.filetype.add({
+  extension = { cds = "cds" }
+})
 
 treesitter_cfg.setup({
   -- A list of parser names, or "all"

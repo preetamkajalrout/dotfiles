@@ -5,23 +5,22 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# Native ZSH Settings
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt AUTO_CD
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="jonathan"
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-plugins=(
-    git
-    zsh-autosuggestions
-)
-
-source $ZSH/oh-my-zsh.sh
+# Source Plugins Directly
+if [[ -f "$HOME/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+  source "$HOME/powerlevel10k/powerlevel10k.zsh-theme"
+fi
+if [[ -f "$HOME/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+  source "$HOME/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
 
 ## unset LESS to bring back normal bash pager option
 unset LESS

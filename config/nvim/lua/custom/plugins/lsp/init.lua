@@ -1,4 +1,4 @@
-require "custom.plugins.lsp.cds"
+
 local km = vim.keymap.set
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -45,63 +45,47 @@ local lsp_flags = {
 -- blink.cmp supports LSP capabilities, so advertise it to LSP servers
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
--- TODO: Each server config should be configured via. loop instead of long list of file
-local lspcfg_status_ok, lspconfig = pcall(require, "lspconfig")
-if not lspcfg_status_ok then
-  vim.notify("lspconfig couldn't be loaded", "error", {
-    title = "neovim/nvim-lspconfig"
-  })
-  return
+local function setup_server(name, opts)
+  if vim.lsp.config then
+    vim.lsp.config(name, opts)
+    vim.lsp.enable(name)
+  else
+    require("lspconfig")[name].setup(opts)
+  end
 end
--- Setup custom CDS LSP  
-lspconfig["cds"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities
+
+-- Setup native CDS LSP
+setup_server("cds", {
+  cmd = { vim.fn.has("win32") == 1 and "cmd.exe" or "cds-lsp", vim.fn.has("win32") == 1 and "/C" or "--stdio" },
+  filetypes = { "cds" },
+  root_markers = { ".cdsrc.json", "package.json", ".git" },
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities
 })
-lspconfig["pyright"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities
-})
-lspconfig["ts_ls"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities
-})
-lspconfig["rust_analyzer"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-    -- Server-specific settings...
-    settings = {
-      ["rust-analyzer"] = {}
-    }
-})
-lspconfig["lua_ls"].setup({
+
+setup_server("ts_ls", { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
+
+setup_server("rust_analyzer", {
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
-  -- server - specific settings
+  settings = { ["rust-analyzer"] = {} }
+})
+
+setup_server("lua_ls", {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
   settings = {
     Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
+      runtime = { version = 'LuaJIT' },
+      diagnostics = { globals = {'vim'} },
       workspace = {
-        -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
         checkThirdParty = false,
       },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
+      telemetry = { enable = false },
     },
   },
 })
