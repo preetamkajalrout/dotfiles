@@ -249,6 +249,27 @@ install_dotfiles() {
   fi
 }
 
+setup_kitty_themes() {
+  info "kitty-themes: installing Catppuccin..."
+  mkdir -p "$HOME/.config/kitty"
+  mkdir -p "$HOME/.config/gitui"
+  if [[ "$DRY_RUN" == "true" ]]; then
+    info "[DRY RUN] Download Catppuccin themes to ~/.config/kitty using kitten themes"
+  else
+    if command -v kitten &> /dev/null; then
+      kitten themes --dump-theme "Catppuccin-Mocha" > "$HOME/.config/kitty/dark-theme.auto.conf"
+      kitten themes --dump-theme "Catppuccin-Latte" > "$HOME/.config/kitty/light-theme.auto.conf"
+      kitten themes --dump-theme "Catppuccin-Mocha" > "$HOME/.config/kitty/no-preference-theme.auto.conf"
+    else
+      info "kitty: not installed, skipping theme generation"
+    fi
+    
+    # Fetch the official GitUI Catppuccin Latte theme 
+    curl -so "$HOME/.config/gitui/theme.ron" https://raw.githubusercontent.com/catppuccin/gitui/main/themes/catppuccin-latte.ron
+  fi
+  success "themes: installed"
+}
+
 setup_rust() {
   info "rustup: checking..."
   if is_available "rustup" "$HOME/.cargo/bin/rustup"; then
@@ -278,6 +299,7 @@ main() {
   setup_zsh_plugins
   setup_p10k
   install_dotfiles
+  setup_kitty_themes
 
   echo ""
   info "Installing global tools via mise..."
