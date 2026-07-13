@@ -12,7 +12,7 @@ vim.filetype.add({
 
 treesitter_cfg.setup({
   -- A list of parser names, or "all"
-  ensure_installed = { "c", "lua", "rust", "python", "javascript" }, -- parsers with maintainers 
+  ensure_installed = { "c", "lua", "rust", "python", "javascript", "typescript", "tsx" }, -- parsers with maintainers 
   sync_install = false,
   highlight = {
     enable = true,

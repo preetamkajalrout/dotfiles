@@ -38,9 +38,9 @@ end
 
 -- Set global options
 
-local global_opts = {
-  netrw_liststyle = 3, -- 3 = tree view style
-  netrw_banner = 0,    -- hides the bulky help banner
+local global_opts = { -- Disable netrw completely
+  loaded_netrw = 1,
+  loaded_netrwPlugin = 1,
 }
 
 for gk, gv in pairs(global_opts) do

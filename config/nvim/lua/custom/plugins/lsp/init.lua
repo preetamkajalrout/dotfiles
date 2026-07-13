@@ -1,10 +1,15 @@
+local function km(mode, lhs, rhs, desc, bufnr)
+  local options = { noremap=true, silent=true, desc=desc }
+  if bufnr then
+    options.buffer = bufnr
+  end
+  vim.keymap.set(mode, lhs, rhs, options)
+end
 
-local km = vim.keymap.set
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
-km("n", '[d', vim.diagnostic.goto_prev, opts)
-km("n", ']d', vim.diagnostic.goto_next, opts)
+-- Global Diagnostic Mappings
+km("n", '[d', vim.diagnostic.goto_prev, "Previous Diagnostic")
+km("n", ']d', vim.diagnostic.goto_next, "Next Diagnostic")
+km("n", 'gl', vim.diagnostic.open_float, "Show Line Diagnostics")
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -12,29 +17,19 @@ local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  km("n", "gD", vim.lsp.buf.declaration, bufopts)
-  km("n", "gd", vim.lsp.buf.definition, bufopts)
-  km("n", "K", vim.lsp.buf.hover, bufopts)
-  km("n", "gi", vim.lsp.buf.implementation, bufopts)
-  km("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-  km("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-  km("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-  km("n", "<space>wl", function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  km("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-  km("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-  km("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-  km("n", "gr", vim.lsp.buf.references, bufopts)
+  -- LSP Mappings
+  km("n", "gD", vim.lsp.buf.declaration, "Go to Declaration", bufnr)
+  km("n", "gd", vim.lsp.buf.definition, "Go to Definition", bufnr)
+  km("n", "K", vim.lsp.buf.hover, "Hover Documentation", bufnr)
+  km("n", "gi", vim.lsp.buf.implementation, "Go to Implementation", bufnr)
+  km("n", "gK", vim.lsp.buf.signature_help, "Signature Help", bufnr)
+  km("n", "<space>D", vim.lsp.buf.type_definition, "Type Definition", bufnr)
+  km("n", "<space>rn", vim.lsp.buf.rename, "Rename Symbol", bufnr)
+  km("n", "<space>ca", vim.lsp.buf.code_action, "Code Action", bufnr)
+  km("n", "gr", vim.lsp.buf.references, "Find References", bufnr)
   km("n", "<space>lf", function()
-    vim.lsp.buf.format({
-      -- filter = function(clnt) return clnt.name ~= "tsserver" end,
-      async = true
-    })
-  end, bufopts)
+    vim.lsp.buf.format({ async = true })
+  end, "Format Document", bufnr)
 end
 
 local lsp_flags = {

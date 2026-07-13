@@ -6,8 +6,6 @@ miniclue.setup({
     { mode = 'n', keys = '<Leader>' },
     { mode = 'x', keys = '<Leader>' },
 
-    -- Built-in completion
-    { mode = 'i', keys = '<C-x>' },
 
     -- `g` key
     { mode = 'n', keys = 'g' },
@@ -43,7 +41,7 @@ miniclue.setup({
 
     -- Custom clues for your existing keymaps in keymaps.lua
     { mode = 'n', keys = '<Leader>f', desc = '+FzfLua' },
-    { mode = 'n', keys = '<Leader>x', desc = '+Trouble' },
+    { mode = 'n', keys = '<Leader>x', desc = '+Diagnostics' },
     { mode = 'n', keys = '<Leader>w', desc = '+Window/Buffer' },
     { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
   },

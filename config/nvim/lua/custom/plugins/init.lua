@@ -21,7 +21,15 @@ require("lazy").setup({
 
   -- Colorscheme
   {
-    "navarasu/onedark.nvim",
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup({
+        flavour = "mocha", -- Default to dark mode
+      })
+      vim.cmd.colorscheme "catppuccin"
+    end,
   },
 
   -- Auto Dark Mode
@@ -29,18 +37,12 @@ require("lazy").setup({
     "f-person/auto-dark-mode.nvim",
     opts = {
       set_dark_mode = function()
-        vim.api.nvim_set_option("background", "dark")
-        pcall(function()
-          require("onedark").setup({ style = "deep" })
-          require("onedark").load()
-        end)
+        vim.api.nvim_set_option_value("background", "dark", {})
+        pcall(function() vim.cmd("Catppuccin mocha") end)
       end,
       set_light_mode = function()
-        vim.api.nvim_set_option("background", "light")
-        pcall(function()
-          require("onedark").setup({ style = "light" })
-          require("onedark").load()
-        end)
+        vim.api.nvim_set_option_value("background", "light", {})
+        pcall(function() vim.cmd("Catppuccin latte") end)
       end,
     },
   },
@@ -64,6 +66,25 @@ require("lazy").setup({
     "echasnovski/mini.pairs",
     version = false,
     config = function() require("mini.pairs").setup() end,
+  },
+
+  -- File Explorer (Oil.nvim)
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("oil").setup({
+        default_file_explorer = true, -- Replaces netrw automatically
+        columns = { "icon" },
+        view_options = { show_hidden = true },
+        keymaps = {
+          ["<C-h>"] = false, -- Disable default horizontal split to fix window navigation conflict
+          ["<C-s>"] = false, -- Disable default vertical split
+          ["<C-x>"] = "actions.select_split",  -- Match FzfLua horizontal split
+          ["<C-v>"] = "actions.select_vsplit", -- Match FzfLua vertical split
+        },
+      })
+    end,
   },
 
   -- Git
@@ -111,8 +132,6 @@ require("lazy").setup({
     "mfussenegger/nvim-lint",
     config = function() require("custom.plugins.configs.nvimlint") end,
   },
-
-
 
   -- Mini.clue 
   {
