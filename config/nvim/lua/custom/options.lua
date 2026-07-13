@@ -14,6 +14,7 @@ local options = {
   swapfile = true,				-- swap file help keep a delta in-memory to recover easily -- more to be read on this
   splitright = true,			-- force open vertical split to right
   splitbelow = true,			-- force open horizontal split to bottom
+  laststatus = 3,                       -- global statusline (one at the bottom)
   termguicolors = true,			-- supports more colors in modern shell emulators
   undofile = true,				-- enables persistence undo
   updatetime = 300,			-- faster completion (default: 4000ms) -- TODO: yet to know how this affects faster completion

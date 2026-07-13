@@ -22,6 +22,54 @@ km("n", "<C-j>", "<C-w>j", "Window Down")
 km("n", "<C-k>", "<C-w>k", "Window Up")
 km("n", "<C-l>", "<C-w>l", "Window Right")
 
+-- Toggle maximize split (retains exact original window layout dimensions)
+local restore_maximized_win = nil
+km("n", "<leader>m", function()
+  if restore_maximized_win then
+    pcall(vim.cmd, restore_maximized_win)
+    restore_maximized_win = nil
+  else
+    restore_maximized_win = vim.fn.winrestcmd()
+    vim.cmd("wincmd _")
+    vim.cmd("wincmd |")
+  end
+end, "Toggle Maximize Split")
+
+-- Smart split resizer to move the border visually in the direction pressed
+local function resize_split(direction, amount)
+  local cur_win = vim.fn.winnr()
+  if direction == "left" then
+    if vim.fn.winnr("l") ~= cur_win then
+      vim.cmd("vertical resize -" .. amount)
+    else
+      vim.cmd("vertical resize +" .. amount)
+    end
+  elseif direction == "right" then
+    if vim.fn.winnr("l") ~= cur_win then
+      vim.cmd("vertical resize +" .. amount)
+    else
+      vim.cmd("vertical resize -" .. amount)
+    end
+  elseif direction == "up" then
+    if vim.fn.winnr("j") ~= cur_win then
+      vim.cmd("resize -" .. amount)
+    else
+      vim.cmd("resize +" .. amount)
+    end
+  elseif direction == "down" then
+    if vim.fn.winnr("j") ~= cur_win then
+      vim.cmd("resize +" .. amount)
+    else
+      vim.cmd("resize -" .. amount)
+    end
+  end
+end
+
+km("n", "<A-Up>", function() resize_split("up", 2) end, "Visual Resize Up")
+km("n", "<A-Down>", function() resize_split("down", 2) end, "Visual Resize Down")
+km("n", "<A-Left>", function() resize_split("left", 2) end, "Visual Resize Left")
+km("n", "<A-Right>", function() resize_split("right", 2) end, "Visual Resize Right")
+
 km("n", "<leader>e", function() require("oil").toggle_float() end, "File Explorer")
 
 -- Navigate buffer (~ files)
