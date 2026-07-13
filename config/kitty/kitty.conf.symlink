@@ -59,10 +59,10 @@ map cmd+shift+right layout_action move_to_screen_edge right
 map cmd+shift+down layout_action move_to_screen_edge bottom
 
 # Switch focus to the neighboring window in the indicated direction
-map cmd+left neighboring_window left
-map cmd+right neighboring_window right
-map cmd+up neighboring_window up
-map cmd+down neighboring_window down
+map ctrl+cmd+left neighboring_window left
+map ctrl+cmd+right neighboring_window right
+map ctrl+cmd+up neighboring_window up
+map ctrl+cmd+down neighboring_window down
 
 # Set the bias of the split containing the currently focused window. The
 # currently focused window will take up the specified percent of its parent
