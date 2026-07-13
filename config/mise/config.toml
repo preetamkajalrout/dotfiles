@@ -10,3 +10,7 @@ aube = "latest"
 "aqua:astral-sh/ruff" = "latest"
 "npm:typescript-language-server" = "latest"
 "npm:typescript" = "latest"
+
+[settings]
+default_config_filename = ".tool-versions"
+asdf_compat = true
