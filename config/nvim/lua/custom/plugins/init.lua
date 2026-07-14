@@ -21,14 +21,16 @@ require("lazy").setup({
 
   -- Colorscheme
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "olimorris/onedarkpro.nvim",
+    name = "onedarkpro",
     priority = 1000,
     config = function()
-      require("catppuccin").setup({
-        flavour = "mocha", -- Default to dark mode
+      require("onedarkpro").setup({
+        options = {
+          transparency = false,
+        }
       })
-      vim.cmd.colorscheme "catppuccin"
+      vim.cmd.colorscheme "onedark"
     end,
   },
 
@@ -38,11 +40,11 @@ require("lazy").setup({
     opts = {
       set_dark_mode = function()
         vim.api.nvim_set_option_value("background", "dark", {})
-        pcall(function() vim.cmd("Catppuccin mocha") end)
+        pcall(function() vim.cmd("colorscheme onedark") end)
       end,
       set_light_mode = function()
         vim.api.nvim_set_option_value("background", "light", {})
-        pcall(function() vim.cmd("Catppuccin latte") end)
+        pcall(function() vim.cmd("colorscheme onelight") end)
       end,
     },
   },

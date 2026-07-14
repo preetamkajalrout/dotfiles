@@ -250,22 +250,18 @@ install_dotfiles() {
 }
 
 setup_kitty_themes() {
-  info "kitty-themes: installing Catppuccin..."
+  info "kitty-themes: installing One Dark..."
   mkdir -p "$HOME/.config/kitty"
-  mkdir -p "$HOME/.config/gitui"
   if [[ "$DRY_RUN" == "true" ]]; then
-    info "[DRY RUN] Download Catppuccin themes to ~/.config/kitty using kitten themes"
+    info "[DRY RUN] Download One Dark themes to ~/.config/kitty using kitten themes"
   else
     if command -v kitten &> /dev/null; then
-      kitten themes --dump-theme "Catppuccin-Mocha" > "$HOME/.config/kitty/dark-theme.auto.conf"
-      kitten themes --dump-theme "Catppuccin-Latte" > "$HOME/.config/kitty/light-theme.auto.conf"
-      kitten themes --dump-theme "Catppuccin-Mocha" > "$HOME/.config/kitty/no-preference-theme.auto.conf"
+      kitten themes --dump-theme "One Dark" > "$HOME/.config/kitty/dark-theme.auto.conf"
+      kitten themes --dump-theme "Atom One Light" > "$HOME/.config/kitty/light-theme.auto.conf"
+      kitten themes --dump-theme "One Dark" > "$HOME/.config/kitty/no-preference-theme.auto.conf"
     else
       info "kitty: not installed, skipping theme generation"
     fi
-    
-    # Fetch the official GitUI Catppuccin Latte theme 
-    curl -so "$HOME/.config/gitui/theme.ron" https://raw.githubusercontent.com/catppuccin/gitui/main/themes/catppuccin-latte.ron
   fi
   success "themes: installed"
 }

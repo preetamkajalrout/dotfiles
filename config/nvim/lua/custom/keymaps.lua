@@ -140,7 +140,10 @@ local function open_floating_term(cmd)
 end
 
 -- Map <leader>gg to open GitUI in the floating terminal
-km("n", "<leader>gg", function() open_floating_term("gitui") end, "GitUI (Floating)")
+km("n", "<leader>gg", function()
+  local theme = vim.o.background == "dark" and "theme_dark.ron" or "theme_light.ron"
+  open_floating_term("gitui -t " .. theme)
+end, "GitUI (Floating)")
 
 -- Diagnostics & LSP 
 km("n", "<leader>xx", ":FzfLua diagnostics_document<CR>", "Document Diagnostics")

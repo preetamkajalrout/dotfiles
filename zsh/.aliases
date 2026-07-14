@@ -9,3 +9,7 @@ alias l="ls -lha"
 function mkcd() {
   mkdir -p "$1" && cd "$1"
 }
+
+# GitUI aliases
+alias gud="gitui -t theme_dark.ron"
+alias gul="gitui -t theme_light.ron"
