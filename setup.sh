@@ -266,6 +266,58 @@ setup_kitty_themes() {
   success "themes: installed"
 }
 
+setup_git_and_ssh() {
+  info "Configuring Git credential helper..."
+  if [[ "$DRY_RUN" == "true" ]]; then
+    info "[DRY RUN] Set OS-specific git credential helper"
+  else
+    if [[ "$PLATFORM" == "mac" ]]; then
+      git config --global credential.helper osxkeychain
+    elif [[ -n "$WSL_DISTRO_NAME" ]]; then
+      if command -v git-credential-manager &> /dev/null; then
+        git config --global credential.helper manager
+      elif command -v git-credential-manager.exe &> /dev/null; then
+        git config --global credential.helper manager.exe
+      fi
+    else
+      if command -v git-credential-libsecret &> /dev/null; then
+        git config --global credential.helper libsecret
+      else
+        git config --global credential.helper cache
+      fi
+    fi
+  fi
+
+  info "Configuring SSH config defaults..."
+  mkdir -p "$HOME/.ssh"
+  local ssh_config="$HOME/.ssh/config"
+  if [[ "$DRY_RUN" == "true" ]]; then
+    info "[DRY RUN] Configure global defaults (AddKeysToAgent, IdentitiesOnly, UseKeychain) in $ssh_config"
+  else
+    if [[ ! -f "$ssh_config" ]] || ! grep -q "Host \*" "$ssh_config" 2>/dev/null; then
+      local temp_config
+      temp_config=$(mktemp)
+      echo "Host *" > "$temp_config"
+      echo "    AddKeysToAgent yes" >> "$temp_config"
+      if [[ "$PLATFORM" == "mac" ]]; then
+        echo "    UseKeychain yes" >> "$temp_config"
+      fi
+      echo "    IdentitiesOnly yes" >> "$temp_config"
+      echo "" >> "$temp_config"
+
+      if [[ -f "$ssh_config" ]]; then
+        cat "$ssh_config" >> "$temp_config"
+      fi
+
+      mv "$temp_config" "$ssh_config"
+      chmod 600 "$ssh_config"
+      success "SSH config defaults configured"
+    else
+      success "SSH config already has global defaults"
+    fi
+  fi
+}
+
 setup_rust() {
   info "rustup: checking..."
   if is_available "rustup" "$HOME/.cargo/bin/rustup"; then
@@ -296,6 +348,7 @@ main() {
   setup_p10k
   install_dotfiles
   setup_kitty_themes
+  setup_git_and_ssh
 
   echo ""
   info "Installing global tools via mise..."
