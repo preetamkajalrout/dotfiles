@@ -109,6 +109,14 @@ require("lazy").setup({
     opts = {},
   },
 
+  -- ASCII Mermaid
+  {
+    "kais-radwan/ascii-mermaid",
+    ft = "markdown",
+    cmd = { "MermaidRender", "MermaidRenderAll", "MermaidClear" },
+    opts = {},
+  },
+
   -- Autocompletion
   {
     'saghen/blink.cmp',
