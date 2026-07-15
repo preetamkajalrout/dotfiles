@@ -107,13 +107,13 @@ end, "Find Buffers")
 local function open_floating_term(cmd)
   -- Create a completely empty, unlisted buffer
   local buf = vim.api.nvim_create_buf(false, true)
-  
+
   -- Calculate window size (95% of the screen to prevent clipping the bottom bar)
   local width = math.floor(vim.o.columns * 0.95)
   local height = math.floor(vim.o.lines * 0.95)
   local row = math.floor((vim.o.lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
-  
+
   -- Pop open the floating window
   local win = vim.api.nvim_open_win(buf, true, {
     relative = "editor",
@@ -145,7 +145,10 @@ km("n", "<leader>gg", function()
   open_floating_term("gitui -t " .. theme)
 end, "GitUI (Floating)")
 
--- Diagnostics & LSP 
+-- Diagnostics & LSP
 km("n", "<leader>xx", ":FzfLua diagnostics_document<CR>", "Document Diagnostics")
 km("n", "<leader>xW", ":FzfLua diagnostics_workspace<CR>", "Workspace Diagnostics")
 km("n", "<leader>xr", ":FzfLua lsp_references<CR>", "LSP References")
+
+-- Markdown Render Toggle
+km("n", "<leader>pm", ":RenderMarkdown toggle<CR>", "Toggle Markdown Render")

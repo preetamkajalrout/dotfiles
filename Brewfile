@@ -7,6 +7,7 @@ brew "fd"
 brew "bat"
 brew "fzf"
 brew "neovim"
+brew "lua-language-server"
 tap "yqrashawn/goku"
 
 brew "yqrashawn/goku/goku"

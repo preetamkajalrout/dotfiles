@@ -5,6 +5,7 @@ unzip
 jq
 zsh
 neovim
+lua-language-server
 ripgrep
 fd-find
 bat

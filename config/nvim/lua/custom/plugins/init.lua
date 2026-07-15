@@ -102,6 +102,13 @@ require("lazy").setup({
     config = function() require("custom.plugins.configs.lualine") end,
   },
 
+  -- Markdown Rendering
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    opts = {},
+  },
+
   -- Autocompletion
   {
     'saghen/blink.cmp',

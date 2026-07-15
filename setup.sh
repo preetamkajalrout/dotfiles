@@ -329,6 +329,13 @@ setup_rust() {
     fi
     success "rustup: installed"
   fi
+
+  info "rust-analyzer: checking..."
+  if [[ "$DRY_RUN" != "true" ]]; then
+    # Ensure rust-analyzer component is installed
+    "$HOME/.cargo/bin/rustup" component add rust-analyzer
+    success "rust-analyzer: installed"
+  fi
 }
 
 main() {
