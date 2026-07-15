@@ -1,0 +1,31 @@
+{
+  "buffer_font_family": "MesloLGS Nerd Font",
+  "git_panel": {
+    "group_by": "none",
+    "tree_view": true
+  },
+  "proxy": "",
+  "collaboration_panel": {
+    "button": false,
+  },
+  "vim": {
+    "toggle_relative_line_numbers": false,
+  },
+  "cli_default_open_behavior": "existing_window",
+  "terminal": {
+    "font_family": "Hack Nerd Font",
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+    "anthropic_retention": false,
+  },
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark",
+  },
+}
