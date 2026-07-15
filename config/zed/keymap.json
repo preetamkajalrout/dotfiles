@@ -1,0 +1,23 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      // "j k": "vim::NormalBefore"
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-shift-h": "workspace::ActivatePaneLeft",
+      "alt-shift-j": "workspace::ActivatePaneDown",
+      "alt-shift-k": "workspace::ActivatePaneUp",
+      "alt-shift-l": "workspace::ActivatePaneRight",
+    }
+  }
+]

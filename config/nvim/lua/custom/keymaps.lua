@@ -17,10 +17,10 @@ km("n", "<leader>w", ":bdelete!<CR>", "Close buffer")
 km("n", "<leader>wa", ":%bdelete!<CR>:q<CR>", "Close all buffers and quit")
 
 -- Better window navigation
-km("n", "<C-h>", "<C-w>h", "Window Left")
-km("n", "<C-j>", "<C-w>j", "Window Down")
-km("n", "<C-k>", "<C-w>k", "Window Up")
-km("n", "<C-l>", "<C-w>l", "Window Right")
+km("n", "<A-H>", "<C-w>h", "Window Left")
+km("n", "<A-J>", "<C-w>j", "Window Down")
+km("n", "<A-K>", "<C-w>k", "Window Up")
+km("n", "<A-L>", "<C-w>l", "Window Right")
 
 -- Toggle maximize split (retains exact original window layout dimensions)
 local restore_maximized_win = nil

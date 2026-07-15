@@ -80,10 +80,13 @@ require("lazy").setup({
         columns = { "icon" },
         view_options = { show_hidden = true },
         keymaps = {
-          ["<C-h>"] = false, -- Disable default horizontal split to fix window navigation conflict
+          ["<C-h>"] = "actions.select_vsplit",
+          ["<C-l>"] = "actions.select_vsplit",
+          ["<C-j>"] = "actions.select_split",
+          ["<C-k>"] = "actions.select_split",
           ["<C-s>"] = false, -- Disable default vertical split
-          ["<C-x>"] = "actions.select_split",  -- Match FzfLua horizontal split
-          ["<C-v>"] = "actions.select_vsplit", -- Match FzfLua vertical split
+          ["<C-x>"] = false, -- Disable default split
+          ["<C-v>"] = false, -- Disable default vsplit
         },
       })
     end,
